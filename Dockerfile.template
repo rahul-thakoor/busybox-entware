@@ -1,0 +1,15 @@
+ARG BALENA_ARCH=%%BALENA_ARCH%%
+
+FROM busybox:stable as builder
+
+ARG BALENA_ARCH
+
+WORKDIR /usr/src
+
+COPY dl-install-entware.sh ./
+
+RUN chmod u+x dl-install-entware.sh && \
+    ./dl-install-entware.sh ${BALENA_ARCH} &&\
+    rm -rf dl-install-entware.sh
+
+ENV PATH=$PATH:/opt/bin/:/opt/sbin
